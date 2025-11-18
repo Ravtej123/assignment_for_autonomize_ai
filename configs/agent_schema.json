@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "patient_id",
+    "name",
+    "dob",
+    "gender",
+    "visit_date"
+  ],
+  "properties": {
+    "patient_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "dob": {
+      "type": "string",
+      "format": "date"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "visit_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "diagnosis_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

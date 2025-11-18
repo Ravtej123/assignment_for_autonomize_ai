@@ -1,0 +1,13 @@
+{
+  "patient_bad_format": {
+    "patient_id": "",
+    "name": "Jane Roe",
+    "dob": "12/01/1980",
+    "gender": "female",
+    "visit_date": "01-02-2025"
+  },
+  "model_malformed": {
+    "notes": "Example malicious input: contains SQL injection attempt 'DROP TABLE patients;' and/or excessive length string",
+    "age": "unknown"
+  }
+}

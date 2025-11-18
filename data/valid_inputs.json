@@ -1,0 +1,30 @@
+{
+  "patient_valid": {
+    "patient_id": "P12345",
+    "name": "John Doe",
+    "dob": "1980-12-01",
+    "gender": "male",
+    "visit_date": "2025-01-02T10:30:00Z",
+    "diagnosis_codes": [
+      "I20"
+    ],
+    "medications": [
+      "Aspirin"
+    ],
+    "contact": {
+      "phone": "1234567890",
+      "email": "john.doe@example.com"
+    }
+  },
+  "model_valid": {
+    "age": 67,
+    "symptoms": [
+      "chest pain",
+      "shortness of breath"
+    ],
+    "vitals": {
+      "bp": "140/90",
+      "hr": 110
+    }
+  }
+}

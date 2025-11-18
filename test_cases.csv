@@ -1,0 +1,33 @@
+Issue Type,Summary,Description,Priority,Test Steps,Expected Result,Pass/Fail Condition
+Test Case,AG-01: Successful Data Extraction and Schema Validation,Verify that the agent correctly extracts a complete patient record and validates it against the schema.,High,"1. Trigger the agent to fetch patient_id = P12345. 
+2. Capture the extracted JSON. 
+3. Validate JSON against schema. 
+4. Compare each field/value with the source system.",Data must match schema and values must match the source. No missing or incorrect fields.,PASS if schema validation success + all field values match; FAIL otherwise.
+Test Case,AG-02: Handling Missing Required Fields,Confirm that the agent detects missing mandatory fields and prevents invalid data from entering the pipeline.,High,"1. Trigger extraction on a record missing patient_id and dob. 
+2. Review logs and validation output. 
+3. Check if record is quarantined or flagged. 
+4. Verify alert/notification is generated.",Record is rejected and logged. Data must not proceed.,PASS if missing fields are detected and user is notified; FAIL if system accepts invalid record.
+Test Case,AG-03: Detect Incorrect Data Types and Formats,"Ensure that the agent identifies invalid formats (e.g., wrong date format) and either normalizes or rejects them.",Medium-High,"1. Extract record with invalid date formats. 
+2. Validate data against schema. 
+3. Observe normalization or error handling.",Agent normalizes formats OR rejects the record with clear validation errors.,PASS if either normalization occurs correctly by agent or identification of irregular format is detected; FAIL if invalid formats validation is successful
+Test Case,AG-04: Connectivity Failure Handling,"Validate the agents retry, recovery, and deduplication behavior under network interruptions.",Medium,"1. Start extraction. 
+2. Simulate network drop mid-transfer. 
+3. Restore network. 
+4. Observe retry and deduplication behavior.","Agent retries automatically, completes extraction correctly, no duplicates created.",PASS if retry/backoff works and final correct record ingested once; FAIL if data lost or duplicated.
+Test Case,AG-05: Invalid Credentials Handling,Ensure the agent handles authentication failures securely without exposing sensitive information.,High,"1. Configure agent with invalid credentials/expired API token. 
+2. Attempt extraction. 
+3. Observe logs and alerts.",Access denied; agent logs security event and stops processing without exposing sensitive data.,PASS if access denied handled securely with proper logging; FAIL if agent attempts to bypass
+Test Case,MI-01: Valid Input - Correct Model Output,Verify that the model returns the correct classification with high confidence for clean input.,High,"1. Submit structured input (age, symptoms, vitals). 
+2. Capture class label and confidence. 
+3. Compare with baseline.",Model returns expected classification with high confidence.,PASS if class_label and confidence within acceptable threshold; FAIL if mismatch or low confidence.
+Test Case,MI-02: Malformed/Adversarial Input Handling,"Evaluate model behavior when inputs contain malformed text, long strings, or adversarial content.",High,"1. Submit malformed input (special chars, long strings). 
+2. Observe model response.
+3. Check for failures/crashes.",Model safely rejects or returns fallback response. No crashes or unsafe outputs.,"PASS if model handles gracefully (validation error / safe fallback) and logs the event; FAIL if it crashes, hangs, or returns an unsafe/hallucinated output."
+Test Case,MI-03: Incomplete/Ambiguous Input Behavior,Verify that the model does not give overconfident predictions for unclear or incomplete data.,High,"1. Submit input missing key fields or with ambiguous symptoms. 
+2. Capture output of the model.
+3. Check for uncertainty or human-review suggestion.",Model outputs low confidence and avoids overconfident predictions. Suggests more info or review.,PASS if uncertainty handled correctly (low confidence + suggestion for human intervention); FAIL if overconfident prediction occurs.
+Test Case,MI-04: Fairness and Bias Evaluation,Check for demographic bias by testing identical clinical data with different demographic attributes.,Medium-High,"1. Submit test records with identical core data but varied values like gender. 
+2. Compare outputs.",Predictions remain consistent across demographics unless clinically justified. No unexplained bias.,PASS if disparities are within acceptable thresholds and documented; FAIL if significant unexplained bias exists.
+Test Case,MI-05: Model Load & Performance Test,Validate that the model performs within SLA under load and degrades gracefully when overloaded.,Medium,"1. Run load test with increasing concurrent requests. 
+2. Monitor response times/errors. 
+3. Observe behavior under spikes.","Model stays within threshhold time under normal load. Under high load, responds gracefully without crashing.",PASS if latency & error rates within threshhold and graceful degradation observed; FAIL if high error rates or timeouts lead to silent downstream failures.
