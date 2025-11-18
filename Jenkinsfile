@@ -19,10 +19,9 @@ pipeline {
             steps {
                 echo "Creating virtual environment..."
                 sh """
-                    python -m venv ${VENV_DIR}
-                    call v
-                    env\\Scripts\\activate
-                    python -m pip install
+                    ${PYTHON} -m venv ${VENV_DIR}
+                    call venv\\Scripts\\activate
+                    ${PYTHON} -m pip install
                     pip install -r requirements.txt
                     pytest --alluredir=reports
                 """
